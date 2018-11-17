@@ -14,14 +14,17 @@
       </small>
     </div>
     <div class="price">
-      $ {{product.price}}
+      £{{product.price}}
     </div>
   </div>
-  <div *ngIf="product.stock > 0" class="action" fxLayout="row" fxLayoutAlign="end center">
-    <input type="number" min="1" value="1" [max]="product.stock">
-    <button color="accent" mat-button>ADD TO CARD</button>
-  </div>
-  <div class="placholder" *ngIf="product.stock === 0">
-    Out of stock 
+  <mat-divider></mat-divider>
+  <div class="footer">
+    <div *ngIf="product.stock > 0" class="action" fxLayout="row" fxLayoutAlign="end center">
+      <input [(ngModel)]="amount" type="number" value="1" min="1" [max]="product.stock">
+      <button color="accent" [disabled]="amount.value < 0 || amount.value > product.stock" mat-button>ADD TO CARD</button>
+    </div>
+    <div class="placeholder" *ngIf="product.stock === 0">
+      Out of stock
+    </div>
   </div>
 </div>

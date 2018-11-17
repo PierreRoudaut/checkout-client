@@ -11,22 +11,29 @@ div.shop-item {
     .content {
         text-align: center;
         .price {
+            font-weight: bold;
             color: green;
             font-size: 20px;
         }
     }
-    .action {
-        padding: 5px;
-        input {
-            width: 40px;
-            height: 26px;
-            border: 1px solid #D7D7D7;
-            text-align: right;
-            margin: 0px 4px 0px 15px;
-            padding: 0px 6px;
+    .footer {
+        padding: 10px;
+        .action {
+            input {
+                width: 40px;
+                height: 26px;
+                border: 1px solid #D7D7D7;
+                text-align: right;
+                margin: 0px 4px 0px 15px;
+                padding: 0px 6px;
+            }
         }
-    }
-    .placeholder {
-        text-align: center;
+        .placeholder {
+            padding: 5px;
+            text-align: center;
+            text-transform: uppercase;
+            background-color: grey;
+            color: white;
+        }
     }
 }

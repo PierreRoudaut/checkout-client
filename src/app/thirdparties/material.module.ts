@@ -12,7 +12,8 @@ import {
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatGridListModule
+    MatGridListModule,
+    MatDividerModule
 } from '@angular/material';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -31,7 +32,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         MatInputModule,
         FlexLayoutModule,
         MatSelectModule,
-        MatGridListModule
+        MatGridListModule,
+        MatDividerModule
     ],
     exports: [
         MatCardModule,
@@ -46,7 +48,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         MatInputModule,
         FlexLayoutModule,
         MatSelectModule,
-        MatGridListModule
+        MatGridListModule,
+        MatDividerModule
     ]
 })
 export class MaterialModule { }

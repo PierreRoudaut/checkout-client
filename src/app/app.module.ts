@@ -11,6 +11,7 @@ import { AdminPageComponent } from './admin/admin-page/admin-page.component';
 import { ProductService } from './core/product.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ShopItemComponent } from './shop/shop-item/shop-item.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ShopItemComponent } from './shop/shop-item/shop-item.component';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     MaterialModule,

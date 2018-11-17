@@ -12,6 +12,8 @@ export class ShopItemComponent implements OnInit {
 
   @Input() product: Product;
 
+  amount = 1;
+
   constructor() { }
 
   get productImgUrl() {
