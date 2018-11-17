@@ -4,8 +4,8 @@
       <app-shop-item [product]="product" (addToCart)="addToCart($event)"></app-shop-item>
     </mat-grid-tile>
   </mat-grid-list> -->
-  <div [@shopItemsAnimation]="products.length" #grid>
-      <div *ngFor="let product of products">
+  <div [@shopItemsAnimation]="products.length" #grid fxLayout  fxLayout.lt-sm="column" fxLayout.gt-sm="row">
+      <div *ngFor="let product of products" >
         <app-shop-item [product]="product" (addToCart)="addToCart($event)"></app-shop-item>
       </div>
     </div>
