@@ -1,15 +1,16 @@
-<div class="shop-page" >
+<div class="shop-page" fxLayout="center center" fxLayout="column">
   <!-- <mat-grid-list [@shopItemsAnimation]="products.length" #grid>
     <mat-grid-tile *ngFor="let product of products">
       <app-shop-item [product]="product" (addToCart)="addToCart($event)"></app-shop-item>
     </mat-grid-tile>
   </mat-grid-list> -->
-  <div [@shopItemsAnimation]="products.length" #grid fxLayout  fxLayout.lt-sm="column" fxLayout.gt-sm="row">
-      <div *ngFor="let product of products" >
-        <app-shop-item [product]="product" (addToCart)="addToCart($event)"></app-shop-item>
-      </div>
+  <div [@shopItemsAnimation]="products.length" #grid fxLayoutAlign="center center" fxLayout.lt-sm="column"
+    fxLayout.sm="row wrap" fxLayout.gt-sm="row wrap">
+    <div *ngFor="let product of products">
+      <app-shop-item [product]="product" (addToCart)="addToCart($event)"></app-shop-item>
     </div>
-  
+  </div>
+
   <app-shop-cart [cart]="cart" [products]="products">
   </app-shop-cart>
 </div>
