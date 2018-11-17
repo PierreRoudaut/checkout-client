@@ -3,7 +3,9 @@
     <div class="name">{{ product.name }}</div>
     <div class="category">{{ product.category }}</div>
   </div>
-  <img [src]="productImgUrl">
+  <div class="image">
+    <img [src]="productImgUrl">
+  </div>
   <div class="content">
     <div class="description">
       {{ product.description }}
