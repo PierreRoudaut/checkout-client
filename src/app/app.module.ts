@@ -12,13 +12,16 @@ import { ProductService } from './core/product.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ShopItemComponent } from './shop/shop-item/shop-item.component';
 import { FormsModule } from '@angular/forms';
+import { CartService } from './core/cart.service';
+import { ShopCartComponent } from './shop/shop-cart/shop-cart.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ShopPageComponent,
     AdminPageComponent,
-    ShopItemComponent
+    ShopItemComponent,
+    ShopCartComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +33,8 @@ import { FormsModule } from '@angular/forms';
     MaterialModule,
   ],
   providers: [
-    ProductService
+    ProductService,
+    CartService
   ],
   bootstrap: [AppComponent]
 })

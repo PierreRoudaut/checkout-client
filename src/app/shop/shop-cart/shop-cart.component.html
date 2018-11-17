@@ -1,0 +1,7 @@
+<div class="mat-elevation-z1 shop-cart">
+  <ul *ngIf="cart && cart.cartItems && products && products.length ">
+    <li *ngFor="let cartItem of cart.cartItems | keyvalue">
+      {{ cartItem.value.quantity }} X {{ productName(cartItem.key) }}
+    </li>
+  </ul>
+</div>

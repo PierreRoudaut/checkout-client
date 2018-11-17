@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ProductService } from 'src/app/core/product.service';
 import { Product } from 'src/app/core/product';
-import { MatGridList } from '@angular/material';
+import { MatGridList, MatSnackBar } from '@angular/material';
 import { ObservableMedia } from '@angular/flex-layout';
 import { trigger, transition, query, stagger, animate, style } from '@angular/animations';
+import { CartService } from 'src/app/core/cart.service';
+import { Cart, CartItem } from 'src/app/core/cart';
 
 @Component({
   selector: 'app-shop-page',
@@ -31,14 +33,21 @@ export class ShopPageComponent implements OnInit, AfterViewInit {
 
   products: Product[] = [];
 
+  cart: Cart = null;
+
   @ViewChild('grid')
   private grid: MatGridList;
 
-  constructor(private productService: ProductService, private media: ObservableMedia) { }
+  constructor(private productService: ProductService,
+    private media: ObservableMedia,
+    private cartService: CartService,
+    public matSnackBar: MatSnackBar) {
+  }
 
   ngOnInit() {
     this.grid.cols = 1;
     this.productService.list().subscribe(p => this.products = p);
+    this.cartService.getCart().subscribe(c => this.cart = c);
   }
 
   ngAfterViewInit() {
@@ -58,6 +67,27 @@ export class ShopPageComponent implements OnInit, AfterViewInit {
     } else if (this.media.isActive('xs')) {
       this.grid.cols = 1;
     }
+  }
+
+  addToCart(cartItem: CartItem) {
+    let item = this.cart.cartItems[cartItem.productId];
+    if (item) {
+      item.quantity += cartItem.quantity;
+    } else {
+      item = cartItem;
+    }
+    this.cartService.setItem(this.cart.id, cartItem).subscribe(() => {
+      this.cart.cartItems[item.productId] = item;
+      this.matSnackBar.open('Item added to cart', 'OK', {
+        duration: 3000,
+        panelClass: 'toast-info'
+    });
+    }, error => {
+      this.matSnackBar.open(error.message, 'OK', {
+        duration: 3000,
+        panelClass: 'toast-warn'
+      });
+    });
   }
 
 }

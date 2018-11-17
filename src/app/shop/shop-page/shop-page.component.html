@@ -1,7 +1,15 @@
-<div class="shop-page">
-  <mat-grid-list [@shopItemsAnimation]="products.length" #grid>
+<div class="shop-page" >
+  <!-- <mat-grid-list [@shopItemsAnimation]="products.length" #grid>
     <mat-grid-tile *ngFor="let product of products">
-      <app-shop-item [product]="product"></app-shop-item>
+      <app-shop-item [product]="product" (addToCart)="addToCart($event)"></app-shop-item>
     </mat-grid-tile>
-  </mat-grid-list>
+  </mat-grid-list> -->
+  <div [@shopItemsAnimation]="products.length" #grid>
+      <div *ngFor="let product of products">
+        <app-shop-item [product]="product" (addToCart)="addToCart($event)"></app-shop-item>
+      </div>
+    </div>
+  
+  <app-shop-cart [cart]="cart" [products]="products">
+  </app-shop-cart>
 </div>

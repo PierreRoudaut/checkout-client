@@ -13,3 +13,27 @@ body {
     height: 100%;
     background-color: $main-bg-color;
 }
+
+.toast-warn {
+    background-color: mat-color($app-warn) !important;
+    color: white !important;
+    button {
+        color: darkslategray;
+    }
+}
+
+.toast-primary {
+    background-color: mat-color($app-primary) !important;
+    color: white !important;
+    button {
+        color: darkgray;
+    }
+}
+
+.toast-accent {
+    background-color: mat-color($app-accent) !important;
+    color: white !important;
+    button {
+        color: darkgray;
+    }
+}

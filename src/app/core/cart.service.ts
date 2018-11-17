@@ -1,8 +1,9 @@
 import { Injectable, Injector } from '@angular/core';
 import { APIService } from './api.service';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Product } from './product';
+import { Cart, CartItem } from './cart';
 
 
 @Injectable({
@@ -17,12 +18,34 @@ export class CartService extends APIService {
   }
 
 
-    /**
-     * List all products
-     */
-    get(): Observable<Product[]> {
-      return this.httpClient
-          .get<any[]>(this.API_URL)
-          .pipe(map(items => items.map(i => new Product(i))));
+  /**
+   * Get cart for user
+   */
+  getCart(): Observable<Cart> {
+    let cardId = localStorage.getItem('cartId');
+    if (!cardId) {
+      cardId = '_';
+    }
+    return this.httpClient
+      .get<Cart>(this.API_URL + '/' + cardId)
+      .pipe(
+        tap((c) => {
+          localStorage.setItem('cartId', c.id);
+        }),
+        map(c => new Cart(c)));
+  }
+
+
+  /**
+   * add or update a cartItem and it's quantity into the cart
+   */
+  setItem(cartId: string, cartItem: CartItem): Observable<boolean> {
+    const body = JSON.stringify(cartItem);
+    return this.httpClient
+      .post<boolean>(this.API_URL + '/' + cartId + '/setItem', body, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
   }
 }
