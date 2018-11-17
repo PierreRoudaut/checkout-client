@@ -1,0 +1,7 @@
+<div class="shop-page">
+  <mat-grid-list [@shopItemsAnimation]="products.length" #grid>
+    <mat-grid-tile *ngFor="let product of products">
+      <app-shop-item [product]="product"></app-shop-item>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

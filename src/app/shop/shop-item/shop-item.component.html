@@ -1,0 +1,27 @@
+<div class="shop-item mat-elevation-z1">
+  <div class="header">
+    <div class="name">{{ product.name }}</div>
+    <div class="category">{{ product.category }}</div>
+  </div>
+  <img [src]="productImgUrl">
+  <div class="content">
+    <div>
+      {{ product.description }}
+    </div>
+    <div>
+      <small>
+        ({{ product.stock }} remaining)
+      </small>
+    </div>
+    <div class="price">
+      $ {{product.price}}
+    </div>
+  </div>
+  <div *ngIf="product.stock > 0" class="action" fxLayout="row" fxLayoutAlign="end center">
+    <input type="number" min="1" value="1" [max]="product.stock">
+    <button color="accent" mat-button>ADD TO CARD</button>
+  </div>
+  <div class="placholder" *ngIf="product.stock === 0">
+    Out of stock 
+  </div>
+</div>

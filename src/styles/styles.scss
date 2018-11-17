@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+
+// @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import 'variables.scss';
+@import 'custom-material-theme.scss';
+html,
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: $main-bg-color;
+}
