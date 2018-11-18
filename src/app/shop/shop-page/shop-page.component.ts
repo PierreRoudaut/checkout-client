@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProductService } from 'src/app/core/product.service';
 import { Product } from 'src/app/core/product';
 import { MatSnackBar, MatSidenav } from '@angular/material';
@@ -28,7 +28,7 @@ import { Cart, CartItem } from 'src/app/core/cart';
     ])
   ]
 })
-export class ShopPageComponent implements OnInit, AfterViewInit {
+export class ShopPageComponent implements OnInit {
 
   products: Product[] = [];
 
@@ -47,9 +47,12 @@ export class ShopPageComponent implements OnInit, AfterViewInit {
     this.cartService.getCart().subscribe(c => this.cart = c);
   }
 
-  ngAfterViewInit() {
+  get nbItems() {
+    if (!this.cart || !this.cart.cartItems) {
+      return 0;
+    }
+    return Object.entries(this.cart.cartItems).reduce((a, b) => a + b[1].quantity, 0);
   }
-
 
   addToCart(cartItem: CartItem) {
     let item = this.cart.cartItems[cartItem.productId];
@@ -69,6 +72,36 @@ export class ShopPageComponent implements OnInit, AfterViewInit {
         panelClass: 'toast-warn'
       });
     });
+  }
+
+  removeItem(productId: number) {
+    this.cartService
+      .removeItem(this.cart.id, productId)
+      .subscribe(() => {
+        delete this.cart.cartItems[productId];
+        if (this.nbItems === 0) {
+          this.sidenav.close();
+        }
+      }, error => {
+        this.matSnackBar.open(error.message, 'OK', {
+          duration: 3000,
+          panelClass: 'toast-warn'
+        });
+      });
+  }
+
+  clear() {
+    this.cartService
+      .clear(this.cart.id)
+      .subscribe(() => {
+        this.cart.cartItems = {};
+        this.sidenav.close();
+      }, error => {
+        this.matSnackBar.open(error.message, 'OK', {
+          duration: 3000,
+          panelClass: 'toast-warn'
+        });
+      });
   }
 
 }

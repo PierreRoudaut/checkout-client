@@ -20,6 +20,7 @@ div.shop-cart {
         border-top: 1px solid lightgray;
     }
     tr.summary {
+        
         font-size: 18px;
         font-weight: bold;
         .total {
@@ -28,10 +29,10 @@ div.shop-cart {
     }
     div.image {
         img {
-            max-height: 40px;
+            max-height: 50px;
         }
     }
-    button.mat-icon-button:active {
+    button.remove:active {
         transform: scale(0.8);
     }
 }

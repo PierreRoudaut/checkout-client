@@ -1,8 +1,5 @@
 <div class="shop-cart">
-  <div style="font-style: italic;color: grey" *ngIf="!cart || !cart.cartItems">
-    Your cart is empty
-  </div>
-  <table *ngIf="cart && cart.cartItems && products && products.length">
+  <table *ngIf="cartItems.length">
     <tr class="header">
       <th></th>
       <th>Product</th>
@@ -21,27 +18,29 @@
       </td>
       <td align="center">
         <div>
+          <button (mouseup)="decrementQuantity(cartItem)" mat-button mat-icon-button [disabled]="cartItem.quantity < 2">-</button>
           <span>
             {{cartItem.quantity}}
           </span>
+          <button (mouseup)="incrementQuantity(cartItem)" mat-button mat-icon-button [disabled]="cartItem.quantity >= cartItem.stock">+</button>
         </div>
       </td>
       <td align="left">
         £{{cartItem.price}}
       </td>
       <td align="center">
-        <button color="warn" mat-icon-button (click)="removeItem(cartItem.id)">
-          <mat-icon>close</mat-icon>
+        <button (mouseup)="removeItemHandler(cartItem.id)" color="warn" mat-icon-button mat-button>
+            <mat-icon>close</mat-icon>
         </button>
       </td>
     </tr>
     <tr class="summary top-border">
-      <td align="center">TOTAL</td>
+      <td align="center" style="color: grey">TOTAL</td>
       <td></td>
       <td></td>
       <td align="left" class="total">£{{ total }}</td>
       <td>
-        <button mat-button color="warn" (click)="clearCart()">
+        <button mat-button color="warn" (click)="clearCartHandler()">
           Clear
         </button>
       </td>

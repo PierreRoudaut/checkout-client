@@ -24,7 +24,7 @@
     <div *ngIf="product.stock > 0" class="action" fxLayout="row" fxLayoutAlign="end center">
       <input [(ngModel)]="amount" type="number" value="1" min="1" [max]="product.stock">
       <button color="accent" (click)="add()" [disabled]="amount < 0 || amount > product.stock" mat-button>
-        <mat-icon>shopping_cart</mat-icon>
+        <mat-icon>add_shopping_cart</mat-icon>
         ADD TO CARD
       </button>
     </div>

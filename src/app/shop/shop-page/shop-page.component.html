@@ -7,16 +7,16 @@
         Cart
       </span>
     </mat-toolbar>
-    <app-shop-cart [cart]="cart" [products]="products">
+    <app-shop-cart (setItem)="addToCart($event)"  (clearCart)="clear()" (removeItem)="removeItem($event)" [cart]="cart" [products]="products">
     </app-shop-cart>
   </mat-sidenav>
 
-  <mat-toolbar color="primary">
+  <mat-toolbar color="primary" class="mat-elevation-z1">
     <mat-toolbar-row>
       <span>Shop</span>
       <span style="flex: 1 1 auto;"></span>
       <div style="margin-right: 10px;margin-top: 5px">
-        <button matBadge="8" matBadgePosition="after" matBadgeColor="accent" mat-icon-button (click)="sidenav.open()">
+        <button [disabled]="!nbItems" [matBadge]="nbItems" matBadgePosition="after" matBadgeColor="accent" mat-icon-button (click)="sidenav.open()">
           <mat-icon>shopping_cart</mat-icon>
         </button>
       </div>
