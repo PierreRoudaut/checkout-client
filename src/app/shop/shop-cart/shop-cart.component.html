@@ -3,8 +3,9 @@
     <tr class="header">
       <th></th>
       <th>Product</th>
-      <th>Quantity</th>
       <th align="left">Price</th>
+      <th>Quantity</th>
+      <th>Total</th>
       <th></th>
     </tr>
     <tr class="top-border" *ngFor="let cartItem of cartItems">
@@ -16,6 +17,9 @@
       <td>
         {{cartItem.name}}
       </td>
+      <td align="left">
+        {{ formatPrice(cartItem.price) }}
+      </td>
       <td align="center">
         <div>
           <button (mouseup)="decrementQuantity(cartItem)" mat-button mat-icon-button [disabled]="cartItem.quantity < 2">-</button>
@@ -26,22 +30,20 @@
         </div>
       </td>
       <td align="left">
-        £{{cartItem.price}}
+        {{ formatPrice(cartItem.quantity * cartItem.price) }}
       </td>
       <td align="center">
         <button (mouseup)="removeItemHandler(cartItem.id)" color="warn" mat-icon-button mat-button>
-            <mat-icon>close</mat-icon>
+          <mat-icon>close</mat-icon>
         </button>
       </td>
     </tr>
     <tr class="summary top-border">
-      <td align="center" style="color: grey">TOTAL</td>
-      <td></td>
-      <td></td>
-      <td align="left" class="total">£{{ total }}</td>
+      <td colspan="4"></td>
+      <td align="left" class="total">{{ formatPrice(total) }}</td>
       <td>
         <button mat-button color="warn" (click)="clearCartHandler()">
-          Clear
+          Empty Cart
         </button>
       </td>
     </tr>

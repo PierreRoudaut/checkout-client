@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Cart, CartItem } from 'src/app/core/cart';
 import { Product } from 'src/app/core/product';
 import { environment } from 'src/environments/environment';
+import { formatPrice } from 'src/app/core/helpers';
 
 @Component({
   selector: 'app-shop-cart',
@@ -9,12 +10,12 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./shop-cart.component.scss']
 })
 export class ShopCartComponent implements OnInit {
-
   @Input() cart: Cart;
   @Input() products: Product[];
   @Output() removeItem = new EventEmitter<number>();
   @Output() clearCart = new EventEmitter();
   @Output() setItem = new EventEmitter();
+  formatPrice = formatPrice;
   get cartItems() {
     const items = [];
     if (!this.cart || !this.cart.cartItems) {

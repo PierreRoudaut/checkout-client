@@ -29,9 +29,7 @@ import { Cart, CartItem } from 'src/app/core/cart';
   ]
 })
 export class ShopPageComponent implements OnInit {
-
   products: Product[] = [];
-
   cart: Cart = null;
 
   @ViewChild('sidenav')
@@ -61,7 +59,7 @@ export class ShopPageComponent implements OnInit {
     } else {
       item = cartItem;
     }
-    this.cartService.setItem(this.cart.id, cartItem).subscribe(() => {
+    this.cartService.setItem(this.cart.id, item).subscribe(() => {
       this.cart.cartItems[item.productId] = item;
       if (!this.sidenav.opened) {
         this.sidenav.open();

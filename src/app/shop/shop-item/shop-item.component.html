@@ -1,4 +1,4 @@
-<div class="shop-item mat-elevation-z1" fxLayout="column" >
+<div class="shop-item mat-elevation-z1" fxLayout="column">
   <div class="header">
     <div class="name">{{ product.name }}</div>
     <div class="category">{{ product.category }}</div>
@@ -16,7 +16,7 @@
       </small>
     </div>
     <div class="price">
-      £{{product.price}}
+      {{ formatPrice(product.price) }}
     </div>
   </div>
   <mat-divider></mat-divider>
