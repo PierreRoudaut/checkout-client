@@ -2,4 +2,36 @@ div.shop-cart {
     background-color: white;
     border-radius: 4px;
     padding: 10px;
+    td,
+    th {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    th {
+        padding-bottom: 10px;
+    }
+    table {
+        border-collapse: collapse;
+    }
+    tr.header {
+        color: grey;
+    }
+    tr.top-border td {
+        border-top: 1px solid lightgray;
+    }
+    tr.summary {
+        font-size: 18px;
+        font-weight: bold;
+        .total {
+            color: darkgreen;
+        }
+    }
+    div.image {
+        img {
+            max-height: 40px;
+        }
+    }
+    button.mat-icon-button:active {
+        transform: scale(0.8);
+    }
 }

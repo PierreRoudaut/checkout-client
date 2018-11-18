@@ -13,7 +13,9 @@ import {
     MatInputModule,
     MatSelectModule,
     MatGridListModule,
-    MatDividerModule
+    MatDividerModule,
+    MatSidenavModule,
+    MatBadgeModule
 } from '@angular/material';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -33,7 +35,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         FlexLayoutModule,
         MatSelectModule,
         MatGridListModule,
-        MatDividerModule
+        MatDividerModule,
+        MatSidenavModule,
+        MatBadgeModule
     ],
     exports: [
         MatCardModule,
@@ -49,7 +53,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         FlexLayoutModule,
         MatSelectModule,
         MatGridListModule,
-        MatDividerModule
+        MatDividerModule,
+        MatSidenavModule,
+        MatBadgeModule
     ]
 })
 export class MaterialModule { }

@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ProductService } from 'src/app/core/product.service';
 import { Product } from 'src/app/core/product';
-import { MatGridList, MatSnackBar } from '@angular/material';
-import { ObservableMedia } from '@angular/flex-layout';
+import { MatSnackBar, MatSidenav } from '@angular/material';
 import { trigger, transition, query, stagger, animate, style } from '@angular/animations';
 import { CartService } from 'src/app/core/cart.service';
 import { Cart, CartItem } from 'src/app/core/cart';
@@ -35,39 +34,22 @@ export class ShopPageComponent implements OnInit, AfterViewInit {
 
   cart: Cart = null;
 
-  @ViewChild('grid')
-  private grid: MatGridList;
+  @ViewChild('sidenav')
+  private sidenav: MatSidenav;
 
   constructor(private productService: ProductService,
-    private media: ObservableMedia,
     private cartService: CartService,
     public matSnackBar: MatSnackBar) {
   }
 
   ngOnInit() {
-    this.grid.cols = 1;
     this.productService.list().subscribe(p => this.products = p);
     this.cartService.getCart().subscribe(c => this.cart = c);
   }
 
   ngAfterViewInit() {
-    this.updateGrid();
-    this.media.subscribe(change => { this.updateGrid(); });
   }
 
-  updateGrid(): void {
-    if (this.media.isActive('xl')) {
-      this.grid.cols = 5;
-    } else if (this.media.isActive('lg')) {
-      this.grid.cols = 4;
-    } else if (this.media.isActive('md')) {
-      this.grid.cols = 3;
-    } else if (this.media.isActive('sm')) {
-      this.grid.cols = 2;
-    } else if (this.media.isActive('xs')) {
-      this.grid.cols = 1;
-    }
-  }
 
   addToCart(cartItem: CartItem) {
     let item = this.cart.cartItems[cartItem.productId];
@@ -78,10 +60,9 @@ export class ShopPageComponent implements OnInit, AfterViewInit {
     }
     this.cartService.setItem(this.cart.id, cartItem).subscribe(() => {
       this.cart.cartItems[item.productId] = item;
-      this.matSnackBar.open('Item added to cart', 'OK', {
-        duration: 3000,
-        panelClass: 'toast-info'
-    });
+      if (!this.sidenav.opened) {
+        this.sidenav.open();
+      }
     }, error => {
       this.matSnackBar.open(error.message, 'OK', {
         duration: 3000,

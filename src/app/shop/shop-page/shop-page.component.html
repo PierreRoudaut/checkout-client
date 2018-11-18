@@ -1,16 +1,36 @@
-<div class="shop-page" fxLayout="center center" fxLayout="column">
-  <!-- <mat-grid-list [@shopItemsAnimation]="products.length" #grid>
-    <mat-grid-tile *ngFor="let product of products">
-      <app-shop-item [product]="product" (addToCart)="addToCart($event)"></app-shop-item>
-    </mat-grid-tile>
-  </mat-grid-list> -->
-  <div [@shopItemsAnimation]="products.length" #grid fxLayoutAlign="center center" fxLayout.lt-sm="column"
-    fxLayout.sm="row wrap" fxLayout.gt-sm="row wrap">
-    <div *ngFor="let product of products">
-      <app-shop-item [product]="product" (addToCart)="addToCart($event)"></app-shop-item>
+<mat-sidenav-container class="">
+
+  <mat-sidenav #sidenav position="end">
+    <mat-toolbar color="primary">
+      <mat-icon>shopping_cart</mat-icon>
+      <span style="margin-left: 10px">
+        Cart
+      </span>
+    </mat-toolbar>
+    <app-shop-cart [cart]="cart" [products]="products">
+    </app-shop-cart>
+  </mat-sidenav>
+
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <span>Shop</span>
+      <span style="flex: 1 1 auto;"></span>
+      <div style="margin-right: 10px;margin-top: 5px">
+        <button matBadge="8" matBadgePosition="after" matBadgeColor="accent" mat-icon-button (click)="sidenav.open()">
+          <mat-icon>shopping_cart</mat-icon>
+        </button>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div class="shop-page" fxLayout="center center" fxLayout="column">
+    <div [@shopItemsAnimation]="products.length" #grid fxLayoutAlign="center center" fxLayout.lt-sm="column"
+      fxLayout.sm="row wrap" fxLayout.gt-sm="row wrap">
+      <div *ngFor="let product of products">
+        <app-shop-item [product]="product" (addToCart)="addToCart($event)"></app-shop-item>
+      </div>
     </div>
+
   </div>
 
-  <app-shop-cart [cart]="cart" [products]="products">
-  </app-shop-cart>
-</div>
+</mat-sidenav-container>

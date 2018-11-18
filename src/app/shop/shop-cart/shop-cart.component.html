@@ -1,7 +1,50 @@
-<div class="mat-elevation-z1 shop-cart">
-  <ul *ngIf="cart && cart.cartItems && products && products.length ">
-    <li *ngFor="let cartItem of cart.cartItems | keyvalue">
-      {{ cartItem.value.quantity }} X {{ productName(cartItem.key) }}
-    </li>
-  </ul>
+<div class="shop-cart">
+  <div style="font-style: italic;color: grey" *ngIf="!cart || !cart.cartItems">
+    Your cart is empty
+  </div>
+  <table *ngIf="cart && cart.cartItems && products && products.length">
+    <tr class="header">
+      <th></th>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th align="left">Price</th>
+      <th></th>
+    </tr>
+    <tr class="top-border" *ngFor="let cartItem of cartItems">
+      <td>
+        <div class="image">
+          <img [src]="productImgUrl(cartItem.imageFilename)">
+        </div>
+      </td>
+      <td>
+        {{cartItem.name}}
+      </td>
+      <td align="center">
+        <div>
+          <span>
+            {{cartItem.quantity}}
+          </span>
+        </div>
+      </td>
+      <td align="left">
+        £{{cartItem.price}}
+      </td>
+      <td align="center">
+        <button color="warn" mat-icon-button (click)="removeItem(cartItem.id)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </td>
+    </tr>
+    <tr class="summary top-border">
+      <td align="center">TOTAL</td>
+      <td></td>
+      <td></td>
+      <td align="left" class="total">£{{ total }}</td>
+      <td>
+        <button mat-button color="warn" (click)="clearCart()">
+          Clear
+        </button>
+      </td>
+    </tr>
+  </table>
 </div>
