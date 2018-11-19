@@ -60,10 +60,10 @@ export class AdminPageComponent implements OnInit {
         product => {
           this.dataGrid.instance.cancelEditData();
           this.products.push(product);
-          this.matSnackBar.open('Product created', 'OK', { duration: 3000, panelClass: 'toast-primary' });
+          this.matSnackbar.open('Product created', 'OK', { duration: 3000, panelClass: 'toast-primary' });
         },
         err => {
-          this.matSnackBar.open(err.error.message, 'OK', { duration: 3000, panelClass: 'toast-warn' });
+          this.matSnackbar.open(err.error.message, 'OK', { duration: 3000, panelClass: 'toast-warn' });
         });
   }
 
