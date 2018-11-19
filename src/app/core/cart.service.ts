@@ -17,7 +17,6 @@ export class CartService extends APIService {
     super(injector);
   }
 
-
   /**
    * Get cart for user
    */
@@ -34,7 +33,6 @@ export class CartService extends APIService {
         }),
         map(c => new Cart(c)));
   }
-
 
   /**
    * add or update a cartItem and it's quantity into the cart

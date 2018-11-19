@@ -16,13 +16,41 @@ export class ProductService extends APIService {
     super(injector);
   }
 
+  /**
+   * List all products
+   */
+  list(): Observable<Product[]> {
+    return this.httpClient
+      .get<any[]>(this.API_URL)
+      .pipe(map(items => items.map(i => new Product(i))));
+  }
 
-    /**
-     * List all products
-     */
-    list(): Observable<Product[]> {
-      return this.httpClient
-          .get<any[]>(this.API_URL)
-          .pipe(map(items => items.map(i => new Product(i))));
+  /**
+   * Creates a new product
+   * @param productForm with product image
+   */
+  createProduct(productForm: FormData): Observable<Product> {
+    return this.httpClient
+      .post<Product>(`${this.API_URL}/create`, productForm)
+      .pipe(map(product => new Product(product)));
+  }
+
+  /**
+   * Updates an existing product
+   * @param productForm with product image
+   */
+  updateProduct(productForm: FormData): Observable<Product> {
+    return this.httpClient
+      .post<Product>(`${this.API_URL}/update`, productForm)
+      .pipe(map(product => new Product(product)));
+  }
+
+  /**
+   * Delete an existing product
+   * @param productId product to delete
+   */
+  deleteProduct(productId: number): Observable<boolean> {
+    return this.httpClient
+      .delete<boolean>(`${this.API_URL}/delete/${productId}`);
   }
 }

@@ -14,6 +14,7 @@ import { ShopItemComponent } from './shop/shop-item/shop-item.component';
 import { FormsModule } from '@angular/forms';
 import { CartService } from './core/cart.service';
 import { ShopCartComponent } from './shop/shop-cart/shop-cart.component';
+import { DevextremeModule } from './thirdparties/devextreme.module';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ShopCartComponent } from './shop/shop-cart/shop-cart.component';
     BrowserModule,
     AppRoutingModule,
     MaterialModule,
+    DevextremeModule
   ],
   providers: [
     ProductService,
