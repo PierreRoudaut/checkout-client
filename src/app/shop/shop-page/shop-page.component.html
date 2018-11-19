@@ -7,30 +7,41 @@
         Cart
       </span>
     </mat-toolbar>
-    <app-shop-cart (setItem)="addToCart($event)"  (clearCart)="clear()" (removeItem)="removeItem($event)" [cart]="cart" [products]="products">
-    </app-shop-cart>
+
+    <app-shopping-cart (setItem)="addToCart($event)" (clearCart)="clear()" (removeItem)="removeItem($event)" [cart]="cart"
+    [products]="products">
+    </app-shopping-cart>
+
+    <!-- <app-shop-cart (setItem)="addToCart($event)" (clearCart)="clear()" (removeItem)="removeItem($event)" [cart]="cart"
+      [products]="products">
+    </app-shop-cart> -->
   </mat-sidenav>
 
-  <mat-toolbar color="primary" style="background-color: #32385F" class="mat-elevation-z1">
-    <mat-toolbar-row>
-      <span>Shop</span>
-      <span style="flex: 1 1 auto;"></span>
-      <div style="margin-right: 10px;margin-top: 5px">
-        <button [disabled]="!nbItems" [matBadge]="nbItems" matBadgePosition="after" matBadgeColor="accent" mat-icon-button (click)="sidenav.open()">
-          <mat-icon>shopping_cart</mat-icon>
-        </button>
-      </div>
-    </mat-toolbar-row>
-  </mat-toolbar>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" style="background-color: #32385F" class="mat-elevation-z1">
+      <mat-toolbar-row>
+        <span>Shop</span>
+        <span style="flex: 1 1 auto;"></span>
+        <div style="margin-right: 10px;margin-top: 5px">
+          <button [disabled]="!nbItems" [matBadge]="nbItems" matBadgePosition="after" matBadgeColor="accent"
+            mat-icon-button (click)="sidenav.open()">
+            <mat-icon>shopping_cart</mat-icon>
+          </button>
+        </div>
+      </mat-toolbar-row>
+    </mat-toolbar>
 
-  <div class="shop-page" fxLayout="center center" fxLayout="column">
-    <div [@shopItemsAnimation]="products.length" #grid fxLayoutAlign="center center" fxLayout.lt-sm="column"
-      fxLayout.sm="row wrap" fxLayout.gt-sm="row wrap">
-      <div *ngFor="let product of products">
-        <app-shop-item [product]="product" (addToCart)="addToCart($event)"></app-shop-item>
+    <div class="shop-page" fxLayout="center center" fxLayout="column">
+      <div [@shopItemsAnimation]="products.length" #grid fxLayoutAlign="center center" fxLayout.lt-sm="column"
+        fxLayout.sm="row wrap" fxLayout.gt-sm="row wrap">
+        <div *ngFor="let product of products">
+          <app-shop-item [product]="product" (addToCart)="addToCart($event)"></app-shop-item>
+        </div>
       </div>
+
     </div>
+  </mat-sidenav-content>
 
-  </div>
+
 
 </mat-sidenav-container>

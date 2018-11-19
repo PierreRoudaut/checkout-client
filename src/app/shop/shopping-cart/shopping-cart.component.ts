@@ -5,11 +5,11 @@ import { environment } from 'src/environments/environment';
 import * as helper from 'src/app/core/helpers';
 
 @Component({
-  selector: 'app-shop-cart',
-  templateUrl: './shop-cart.component.html',
-  styleUrls: ['./shop-cart.component.scss']
+  selector: 'app-shopping-cart',
+  templateUrl: './shopping-cart.component.html',
+  styleUrls: ['./shopping-cart.component.scss']
 })
-export class ShopCartComponent implements OnInit {
+export class ShoppingCartComponent implements OnInit {
   @Input() cart: Cart;
   @Input() products: Product[];
   @Output() removeItem = new EventEmitter<number>();
@@ -17,7 +17,13 @@ export class ShopCartComponent implements OnInit {
   @Output() setItem = new EventEmitter();
   helper = helper;
 
-  displayedColumns = ['name', 'category', 'quantity'];
+  cartItemsss = [
+    { 'name': 'hello', 'quantity': 2 },
+    { 'name': 'plop', 'quantity': 4 },
+    { 'name': 'plip', 'quantity': 5 }
+  ];
+
+  displayedColumns = ['name', 'quantity'];
   get cartItems() {
     const items = [];
     if (!this.cart || !this.cart.cartItems) {
@@ -30,15 +36,19 @@ export class ShopCartComponent implements OnInit {
     }
     return items;
   }
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+  debug(obj: any) {
+    alert(JSON.stringify(obj));
+  }
 
   get total() {
     return this.cartItems.reduce(function (accumulator, currentValue) {
       return accumulator + (currentValue.quantity * currentValue.price);
     }, 0);
-  }
-
-  debug(obj: any) {
-    alert(JSON.stringify(obj));
   }
 
   decrementQuantity(cartItem: any) {
@@ -63,11 +73,6 @@ export class ShopCartComponent implements OnInit {
 
   clearCartHandler() {
     this.clearCart.emit();
-  }
-
-  constructor() { }
-
-  ngOnInit() {
   }
 
 }

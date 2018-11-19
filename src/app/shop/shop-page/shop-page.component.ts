@@ -72,6 +72,10 @@ export class ShopPageComponent implements OnInit {
     });
   }
 
+  debug(obj: any) {
+    alert(JSON.stringify(obj));
+  }
+
   removeItem(productId: number) {
     this.cartService
       .removeItem(this.cart.id, productId)
