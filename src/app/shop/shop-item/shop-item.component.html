@@ -4,7 +4,7 @@
     <div class="category">{{ product.category }}</div>
   </div>
   <div class="image">
-    <img [src]="productImgUrl">
+    <img [src]="helper.productImgUrl(product.imageFilename)">
   </div>
   <div class="content">
     <div class="description">
@@ -16,7 +16,7 @@
       </small>
     </div>
     <div class="price">
-      {{ formatPrice(product.price) }}
+      {{ helper.formatPrice(product.price) }}
     </div>
   </div>
   <mat-divider></mat-divider>

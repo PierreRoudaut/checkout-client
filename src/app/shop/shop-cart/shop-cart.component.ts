@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Cart, CartItem } from 'src/app/core/cart';
 import { Product } from 'src/app/core/product';
 import { environment } from 'src/environments/environment';
-import { formatPrice } from 'src/app/core/helpers';
+import * as helper from 'src/app/core/helpers';
 
 @Component({
   selector: 'app-shop-cart',
@@ -15,7 +15,7 @@ export class ShopCartComponent implements OnInit {
   @Output() removeItem = new EventEmitter<number>();
   @Output() clearCart = new EventEmitter();
   @Output() setItem = new EventEmitter();
-  formatPrice = formatPrice;
+  helper = helper;
   get cartItems() {
     const items = [];
     if (!this.cart || !this.cart.cartItems) {
@@ -57,10 +57,6 @@ export class ShopCartComponent implements OnInit {
 
   clearCartHandler() {
     this.clearCart.emit();
-  }
-
-  productImgUrl(imageFilename: string) {
-    return `${environment.apiEndpoint}/api/public/images/products/${imageFilename}`;
   }
 
   constructor() { }

@@ -3,7 +3,8 @@ import { DxDataGridComponent } from 'devextreme-angular/ui/data-grid';
 import { Product } from 'src/app/core/product';
 import { ProductService } from 'src/app/core/product.service';
 import { MatSnackBar } from '@angular/material';
-import { remove } from 'lodash/remove';
+import { remove } from 'lodash';
+import * as helper from 'src/app/core/helpers';
 
 @Component({
   selector: 'app-admin-page',
@@ -11,7 +12,7 @@ import { remove } from 'lodash/remove';
   styleUrls: ['./admin-page.component.scss']
 })
 export class AdminPageComponent implements OnInit {
-
+  public helper = helper;
   @ViewChild(DxDataGridComponent) dataGrid: DxDataGridComponent;
 
   products: Product[] = [];

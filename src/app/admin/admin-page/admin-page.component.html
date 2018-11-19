@@ -1,18 +1,40 @@
 <div class="admin-page mat-elevation-z4">
-    <dx-data-grid [dataSource]="products" keyExpr="id" [allowColumnReordering]="false" (onRowUpdating)="onRowUpdating($event)" (onRowRemoving)="onRowRemoving($event)" (onRowInserting)="onRowInserting($event)">
-        <dxo-editing mode="row" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true">
+    <dx-data-grid [dataSource]="products" keyExpr="id" [allowColumnReordering]="false" (onRowUpdating)="onRowUpdating($event)"
+        (onRowRemoving)="onRowRemoving($event)" (onRowInserting)="onRowInserting($event)">
+
+
+        <dxo-editing mode="popup" [allowUpdating]="true" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true">
+            <dxo-popup title="Product details" [showTitle]="true" [width]="700" [height]="345" [position]="{ my: 'top', at: 'top', of: window }">
+            </dxo-popup>
             <dxo-texts confirmDeleteMessage="Delete product ?"></dxo-texts>
         </dxo-editing>
-    
-        <dxi-column [allowSorting]="false" [allowEditing]="false" dataField="imageFilename" [width]="50" caption="" cellTemplate="pictureCellTemplate"></dxi-column>
+
+        <!-- <dxo-editing mode="row" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true">
+            <dxo-texts confirmDeleteMessage="Delete product ?"></dxo-texts>
+        </dxo-editing> -->
+
+        <dxi-column [allowSorting]="false" [allowEditing]="false" dataField="imageFilename" [width]="50" caption=""
+            cellTemplate="pictureCellTemplate"></dxi-column>
         <dxi-column dataField="name" caption="Name">
-            <dxi-validation-rule type="unique"></dxi-validation-rule>
+            <!-- <dxi-validation-rule type="unique"></dxi-validation-rule> -->
         </dxi-column>
-    
-        <div *dxTemplate="let data of 'pictureCellTemplate'">
-          <img *ngIf="data.value" class="picture align-vertically" [src]="data.value" />
-          <mat-icon *ngIf="!data.value" class="picture-placeholder align-vertically" svgIcon="account"></mat-icon>
+        <dxi-column dataField="category" caption="Category">
+        </dxi-column>
+        <dxi-column dataField="price" caption="Price" cellTemplate="priceCellTemplate">
+        </dxi-column>
+        <dxi-column dataField="stock" caption="In Stock">
+        </dxi-column>
+        <dxi-column dataField="description" caption="Description">
+        </dxi-column>
+
+        <div *dxTemplate="let data of 'priceCellTemplate'">
+            {{helper.formatPrice(data.value)}}
         </div>
-    
-      </dx-data-grid>
+
+        <div *dxTemplate="let data of 'pictureCellTemplate'">
+            <img *ngIf="data.value" class="picture align-vertically" [src]="helper.productImgUrl(data.value)" />
+            <mat-icon *ngIf="!data.value" class="picture-placeholder align-vertically" svgIcon="account"></mat-icon>
+        </div>
+
+    </dx-data-grid>
 </div>

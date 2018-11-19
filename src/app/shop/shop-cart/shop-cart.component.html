@@ -11,14 +11,14 @@
     <tr class="top-border" *ngFor="let cartItem of cartItems">
       <td>
         <div class="image">
-          <img [src]="productImgUrl(cartItem.imageFilename)">
+          <img [src]="helper.productImgUrl(cartItem.imageFilename)">
         </div>
       </td>
       <td>
         {{cartItem.name}}
       </td>
       <td align="left">
-        {{ formatPrice(cartItem.price) }}
+        {{ helper.formatPrice(cartItem.price) }}
       </td>
       <td align="center">
         <div>
@@ -30,7 +30,7 @@
         </div>
       </td>
       <td align="left">
-        {{ formatPrice(cartItem.quantity * cartItem.price) }}
+        {{ helper.formatPrice(cartItem.quantity * cartItem.price) }}
       </td>
       <td align="center">
         <button (mouseup)="removeItemHandler(cartItem.id)" color="warn" mat-icon-button mat-button>
@@ -40,7 +40,7 @@
     </tr>
     <tr class="summary top-border">
       <td colspan="4"></td>
-      <td align="left" class="total">{{ formatPrice(total) }}</td>
+      <td align="left" class="total">{{ helper.formatPrice(total) }}</td>
       <td>
         <button mat-button color="warn" (click)="clearCartHandler()">
           Empty Cart
