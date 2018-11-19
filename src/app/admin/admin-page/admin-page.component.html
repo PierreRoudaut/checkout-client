@@ -1,2 +1,18 @@
-<div class="admin-page">
+<div class="admin-page mat-elevation-z4">
+    <dx-data-grid [dataSource]="products" keyExpr="id" [allowColumnReordering]="false" (onRowUpdating)="onRowUpdating($event)" (onRowRemoving)="onRowRemoving($event)" (onRowInserting)="onRowInserting($event)">
+        <dxo-editing mode="row" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true">
+            <dxo-texts confirmDeleteMessage="Delete product ?"></dxo-texts>
+        </dxo-editing>
+    
+        <dxi-column [allowSorting]="false" [allowEditing]="false" dataField="imageFilename" [width]="50" caption="" cellTemplate="pictureCellTemplate"></dxi-column>
+        <dxi-column dataField="name" caption="Name">
+            <dxi-validation-rule type="unique"></dxi-validation-rule>
+        </dxi-column>
+    
+        <div *dxTemplate="let data of 'pictureCellTemplate'">
+          <img *ngIf="data.value" class="picture align-vertically" [src]="data.value" />
+          <mat-icon *ngIf="!data.value" class="picture-placeholder align-vertically" svgIcon="account"></mat-icon>
+        </div>
+    
+      </dx-data-grid>
 </div>

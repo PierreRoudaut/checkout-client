@@ -28,6 +28,8 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/devextreme/dist/css/dx.common.css",
+              "node_modules/devextreme/dist/css/dx.material.blue.light.css",
               "src/styles/styles.scss",
               "src/styles/custom-material-theme.scss",
               "src/styles/variables.scss"
