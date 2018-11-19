@@ -23,6 +23,17 @@ export class AdminPageComponent implements OnInit {
     this.service.list().subscribe(products => this.products = products);
   }
 
+  onEditorPreparing(e) {
+    // tslint:disable-next-line:no-debugger
+    debugger;
+    if (e.dataField === 'image') {
+      e.editorName = 'dxFileUploader'; // Changes the editor's type
+      e.editorOptions.uploadMode = 'useForm';
+      e.editorOptions.name = 'docname';
+      e.editorOptions.accept = 'images/*';
+    }
+  }
+
   onRowRemoving(e) {
     e.cancel = true;
     this.service
@@ -51,6 +62,11 @@ export class AdminPageComponent implements OnInit {
         err => {
           this.matSnackbar.open(err.error.message, 'OK', { duration: 3000, panelClass: 'toast-warn' });
         });
+  }
+
+  onRowPrepared(e) {
+    e.rowElement.style.height = '200px !important';
+    // e.rowElement.css({ height: '100px !important' });
   }
 
   onRowInserting(e) {

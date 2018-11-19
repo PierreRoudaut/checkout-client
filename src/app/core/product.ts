@@ -4,7 +4,7 @@ export class Product {
     description: string;
     category: string;
     price: number;
-    imageFilename: string;
+    imageUrl: string;
     stock: number;
     constructor(obj: any) {
         Object.assign(this, obj);

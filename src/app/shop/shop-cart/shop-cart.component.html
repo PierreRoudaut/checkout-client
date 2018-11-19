@@ -11,7 +11,7 @@
     <tr class="top-border" *ngFor="let cartItem of cartItems">
       <td>
         <div class="image">
-          <img [src]="helper.productImgUrl(cartItem.imageFilename)">
+          <img [src]="cartItem.imageUrl">
         </div>
       </td>
       <td>

@@ -27,22 +27,24 @@ export class ProductService extends APIService {
 
   /**
    * Creates a new product
-   * @param productForm with product image
+   * @param product with product image
    */
-  createProduct(productForm: FormData): Observable<Product> {
+  createProduct(product: Product): Observable<Product> {
+    const body = JSON.stringify(product);
     return this.httpClient
-      .post<Product>(`${this.API_URL}/create`, productForm)
-      .pipe(map(product => new Product(product)));
+      .post<Product>(`${this.API_URL}/create`, body, this.options)
+      .pipe(map(p => new Product(p)));
   }
 
   /**
    * Updates an existing product
-   * @param productForm with product image
+   * @param product with product image
    */
-  updateProduct(productForm: FormData): Observable<Product> {
+  updateProduct(product: FormData): Observable<Product> {
+    const body = JSON.stringify(product);
     return this.httpClient
-      .post<Product>(`${this.API_URL}/update`, productForm)
-      .pipe(map(product => new Product(product)));
+      .post<Product>(`${this.API_URL}/update`, body, this.options)
+      .pipe(map(p => new Product(p)));
   }
 
   /**

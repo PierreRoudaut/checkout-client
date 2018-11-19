@@ -1,35 +1,37 @@
 <div class="shop-item mat-elevation-z1" fxLayout="column">
-  <div class="header">
-    <div class="name">{{ product.name }}</div>
-    <div class="category">{{ product.category }}</div>
-  </div>
-  <div class="image">
-    <img [src]="helper.productImgUrl(product.imageFilename)">
-  </div>
-  <div class="content">
-    <div class="description">
-      {{ product.description }}
+  <div class="wrapper" [ngClass]="{'out-of-stock': !product.stock}">
+    <div class="header">
+      <div class="name">{{ product.name }}</div>
+      <div class="category">{{ product.category }}</div>
     </div>
-    <div class="remaining">
-      <small>
-        ({{ product.stock }} remaining)
-      </small>
+    <div class="image">
+      <img [src]="product.imageUrl">
     </div>
-    <div class="price">
-      {{ helper.formatPrice(product.price) }}
+    <div class="content">
+      <div class="description">
+        {{ product.description }}
+      </div>
+      <div class="remaining">
+        <small>
+          ({{ product.stock }} remaining)
+        </small>
+      </div>
+      <div class="price">
+        {{ helper.formatPrice(product.price) }}
+      </div>
     </div>
-  </div>
-  <mat-divider></mat-divider>
-  <div class="footer">
-    <div *ngIf="product.stock > 0" class="action" fxLayout="row" fxLayoutAlign="end center">
-      <input [(ngModel)]="amount" type="number" value="1" min="1" [max]="product.stock">
-      <button color="accent" (click)="add()" [disabled]="amount < 0 || amount > product.stock" mat-button>
-        <mat-icon>add_shopping_cart</mat-icon>
-        ADD TO CARD
-      </button>
-    </div>
-    <div class="placeholder" *ngIf="product.stock === 0">
-      Out of stock
+    <mat-divider></mat-divider>
+    <div class="footer">
+      <div *ngIf="product.stock > 0" class="action" fxLayout="row" fxLayoutAlign="end center">
+        <input [(ngModel)]="amount" type="number" value="1" min="1" [max]="product.stock">
+        <button color="accent" (click)="add()" [disabled]="amount < 0 || amount > product.stock" mat-button>
+          <mat-icon>add_shopping_cart</mat-icon>
+          ADD TO CARD
+        </button>
+      </div>
+      <div class="placeholder" *ngIf="product.stock === 0">
+        Out of stock
+      </div>
     </div>
   </div>
 </div>

@@ -8,6 +8,12 @@ export class APIService {
     protected readonly API_BASE_URL = environment.apiEndpoint + '/api';
     protected httpClient: HttpClient;
 
+    protected options = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
     constructor(injector: Injector) {
         this.httpClient = injector.get<HttpClient>(HttpClient);
     }

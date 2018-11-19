@@ -40,11 +40,7 @@ export class CartService extends APIService {
   setItem(cartId: string, cartItem: CartItem): Observable<boolean> {
     const body = JSON.stringify(cartItem);
     return this.httpClient
-      .post<boolean>(`${this.API_URL}/${cartId}/setItem`, body, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
+      .post<boolean>(`${this.API_URL}/${cartId}/setItem`, body, this.options);
   }
 
   removeItem(cartId: string, productId: number): Observable<boolean> {

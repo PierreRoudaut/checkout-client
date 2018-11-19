@@ -22,3 +22,9 @@ export function formatPrice(price: number) {
 export function productImgUrl(imageFilename: string) {
     return `${environment.apiEndpoint}/api/public/images/products/${imageFilename}`;
 }
+
+export function stringify(obj: any) {
+    console.log(obj);
+    const str = JSON.stringify(obj);
+    return str;
+}
