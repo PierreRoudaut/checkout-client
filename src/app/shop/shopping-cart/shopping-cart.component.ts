@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { Cart, CartItem } from 'src/app/core/cart';
 import { Product } from 'src/app/core/product';
 import { environment } from 'src/environments/environment';
@@ -9,21 +9,16 @@ import * as helper from 'src/app/core/helpers';
   templateUrl: './shopping-cart.component.html',
   styleUrls: ['./shopping-cart.component.scss']
 })
-export class ShoppingCartComponent implements OnInit {
-  @Input() cart: Cart;
-  @Input() products: Product[];
+export class ShoppingCartComponent implements OnInit, OnChanges {
+  @Input() cart: Cart = new Cart({});
+  @Input() products: Product[] = [];
   @Output() removeItem = new EventEmitter<number>();
   @Output() clearCart = new EventEmitter();
   @Output() setItem = new EventEmitter();
   helper = helper;
-
-  cartItemsss = [
-    { 'name': 'hello', 'quantity': 2 },
-    { 'name': 'plop', 'quantity': 4 },
-    { 'name': 'plip', 'quantity': 5 }
-  ];
-
-  displayedColumns = ['name', 'quantity'];
+  items: any[] = [];
+  // displayedColumns = ['image', 'name', 'quantity', 'price', 'total'];
+  displayedColumns = ['image', 'name', 'unitPrice', 'quantity', 'price', 'actions'];
   get cartItems() {
     const items = [];
     if (!this.cart || !this.cart.cartItems) {
@@ -37,6 +32,18 @@ export class ShoppingCartComponent implements OnInit {
     return items;
   }
   constructor() { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!this.cart || !this.cart.cartItems) {
+      return;
+    }
+    this.items = [];
+    const keys = Object.keys(this.cart.cartItems);
+    for (let i = 0; i < keys.length; i++) {
+      const product = this.products.find(p => p.id.toString() === keys[i]);
+      this.items.push({ ...product, quantity: this.cart.cartItems[keys[i]].quantity });
+    }
+  }
 
   ngOnInit() {
   }

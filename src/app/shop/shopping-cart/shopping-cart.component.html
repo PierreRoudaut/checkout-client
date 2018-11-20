@@ -1,45 +1,76 @@
-<!-- <table>
-  <thead>
-    <tr>
-      <td>Name</td>
-      <td>Quantity</td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let cartItem of cartItemsss">
-      <td>One</td>
-      <td>
-        <div>
-          <button (click)="debug('minus')">-</button>
-          <span>{{ '1' }}</span>
-          <button (click)="debug('plus')">+</button>
+<div class="shopping-cart">
+  <table *ngIf="items.length" mat-table data [dataSource]="items">
+    <ng-container matColumnDef="image">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <div class="image">
+          <img class="cart-item" [src]="element.imageUrl">
         </div>
       </td>
-    </tr>
-  </tbody>
-</table> -->
+      <td mat-footer-cell *matFooterCellDef>
+        <span class="total-label">TOTAL</span>
+      </td>
+    </ng-container>
 
-<table mat-table data [dataSource]="cartItemsss">
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef> Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-  </ng-container>
-<!-- 
-  <ng-container matColumnDef="category">
-    <th mat-header-cell *matHeaderCellDef> Category </th>
-    <td mat-cell *matCellDef="let element"> {{element.category}} </td>
-  </ng-container> -->
 
-  <ng-container matColumnDef="quantity">
-    <th mat-header-cell *matHeaderCellDef> Quantity </th>
-    <td mat-cell *matCellDef="let element">
-      <div>
-        <button color="primary" mat-icon-button mat-button (click)="debug(element)">-</button>
-        <span>{{ element.quantity }}</span>
-        <button color="primary" mat-icon-button mat-button (click)="debug(element)">+</button>
-      </div>
-    </td>
-  </ng-container>
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+
+
+    <ng-container matColumnDef="unitPrice">
+      <th mat-header-cell *matHeaderCellDef> Unit Price </th>
+      <td mat-cell *matCellDef="let element">
+        {{ helper.formatPrice(element.price) }}
+      </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="quantity">
+      <th mat-header-cell *matHeaderCellDef class="center"> Quantity </th>
+      <td mat-cell *matCellDef="let element" class="center">
+        <div>
+          <button disableRipple mat-icon-button (click)="decrementQuantity(element)" [disabled]="element.quantity < 2">-</button>
+          <span>{{ element.quantity }}</span>
+          <button disableRipple mat-icon-button (click)="incrementQuantity(element)" [disabled]="element.quantity >= element.stock">+</button>
+        </div>
+      </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef class="center"> Price </th>
+      <td mat-cell *matCellDef="let element">
+        {{ helper.formatPrice(element.quantity * element.price) }}
+      </td>
+      <td mat-footer-cell *matFooterCellDef> {{ helper.formatPrice(total) }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element" class="center">
+        <div class="remove-item">
+          <button matTooltip="Remove Item" mat-icon-button (click)="removeItemHandler(element.id)" color="warn">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </div>
+      </td>
+      <td mat-footer-cell *matFooterCellDef class="center">
+        <button mat-icon-button color="primary" (click)="clearCartHandler()">
+          <mat-icon matTooltip="Empty Cart">
+            delete_outline
+          </mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+
+  </table>
+</div>

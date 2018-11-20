@@ -24,6 +24,7 @@ export class ShopItemComponent implements OnInit {
       productId: this.product.id,
       quantity: this.amount
     });
+    this.amount = 1;
     this.addToCart.emit(item);
   }
 

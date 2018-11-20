@@ -49,7 +49,7 @@ export class ShopPageComponent implements OnInit {
     if (!this.cart || !this.cart.cartItems) {
       return 0;
     }
-    return Object.entries(this.cart.cartItems).reduce((a, b) => a + b[1].quantity, 0);
+    return Object.keys(this.cart.cartItems).length;
   }
 
   addToCart(cartItem: CartItem) {
@@ -61,6 +61,7 @@ export class ShopPageComponent implements OnInit {
     }
     this.cartService.setItem(this.cart.id, item).subscribe(() => {
       this.cart.cartItems[item.productId] = item;
+      this.cart = Object.assign({}, this.cart);
       if (!this.sidenav.opened) {
         this.sidenav.open();
       }
@@ -81,6 +82,7 @@ export class ShopPageComponent implements OnInit {
       .removeItem(this.cart.id, productId)
       .subscribe(() => {
         delete this.cart.cartItems[productId];
+        this.cart = Object.assign({}, this.cart);
         if (this.nbItems === 0) {
           this.sidenav.close();
         }
@@ -97,6 +99,7 @@ export class ShopPageComponent implements OnInit {
       .clear(this.cart.id)
       .subscribe(() => {
         this.cart.cartItems = {};
+        this.cart = Object.assign({}, this.cart);
         this.sidenav.close();
       }, error => {
         this.matSnackBar.open(error.message, 'OK', {

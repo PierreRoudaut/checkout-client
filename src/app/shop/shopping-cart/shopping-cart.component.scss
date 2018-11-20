@@ -1,0 +1,34 @@
+div.shopping-cart {
+    table {
+        // min-width: 600px;
+        div.image {
+            vertical-align: middle; // text-align: center;
+            img {
+                max-height: 40px;
+            }
+        }
+        td {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        td.center,
+        th.center {
+            text-align: center;
+        }
+        td.mat-column-image {
+            text-align: center;
+        }
+        tr.mat-footer-row {
+            font-weight: bold;
+            .total-label {
+                color: grey;
+            }
+            td.mat-column-price {
+                color: green;
+            }
+        }
+        div.remove-item {
+            text-align: center;
+        }
+    }
+}
