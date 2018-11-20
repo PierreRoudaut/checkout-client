@@ -1,6 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { APIService } from './api.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Product } from './product';
 import { Cart, CartItem } from './cart';
@@ -21,34 +21,56 @@ export class CartService extends APIService {
    * Get cart for user
    */
   getCart(): Observable<Cart> {
-    let cardId = localStorage.getItem('cartId');
+    const cardId = localStorage.getItem('cartId');
+    localStorage.removeItem('cartId');
     if (!cardId) {
-      cardId = '_';
+      return of(new Cart({
+        id: '_',
+        cartItems: {}
+      }));
     }
     return this.httpClient
       .get<Cart>(this.API_URL + '/' + cardId)
-      .pipe(
-        tap((c) => {
-          localStorage.setItem('cartId', c.id);
-        }),
-        map(c => new Cart(c)));
+      .pipe(map(c => new Cart(c)));
   }
 
   /**
-   * add or update a cartItem and it's quantity into the cart
+   * Update the desired quantity of an item into the cart
+   * Creates the cart if non exists
+   * @param cartId unique id of a cart
+   * @param cartItem item to add
    */
-  setItem(cartId: string, cartItem: CartItem): Observable<boolean> {
+  setItem(cartId: string, cartItem: CartItem): Observable<Cart> {
     const body = JSON.stringify(cartItem);
     return this.httpClient
-      .post<boolean>(`${this.API_URL}/${cartId}/setItem`, body, this.options);
+      .post<any>(`${this.API_URL}/${cartId}/setItem`, body, this.options)
+      .pipe(
+        map(c => new Cart(c)),
+        tap(c => {
+          localStorage.setItem('cartId', c.id);
+        }));
   }
 
-  removeItem(cartId: string, productId: number): Observable<boolean> {
-    return this.httpClient.delete<boolean>(`${this.API_URL}/${cartId}/removeItem/${productId}`);
+  /**
+   * Remove an item for a given cart
+   * @param cartId Unique cart id
+   * @param productId Product id
+   */
+  removeItem(cartId: string, productId: number): Observable<Cart> {
+    return this.httpClient
+      .delete<any>(`${this.API_URL}/${cartId}/removeItem/${productId}`)
+      .pipe(
+        map((c) => new Cart(c)));
   }
 
-  clear(cartId: string): Observable<boolean> {
-    return this.httpClient.post<boolean>(`${this.API_URL}/${cartId}/clear`, null);
+  /**
+   * Clear the content of a cart
+   * @param cartId Unique cart id
+   */
+  clear(cartId: string): Observable<Cart> {
+    return this.httpClient.post<any>(`${this.API_URL}/${cartId}/clear`, null)
+      .pipe(
+        map((c) => new Cart(c)));
   }
 
 }

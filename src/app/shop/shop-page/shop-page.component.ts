@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
 import { ProductService } from 'src/app/core/product.service';
 import { Product } from 'src/app/core/product';
 import { MatSnackBar, MatSidenav } from '@angular/material';
@@ -6,6 +6,8 @@ import { trigger, transition, query, stagger, animate, style } from '@angular/an
 import { CartService } from 'src/app/core/cart.service';
 import { Cart, CartItem } from 'src/app/core/cart';
 import { SignalRService } from 'src/app/core/signalR.service';
+import { findIndex } from 'lodash';
+
 
 @Component({
   selector: 'app-shop-page',
@@ -31,45 +33,76 @@ import { SignalRService } from 'src/app/core/signalR.service';
 })
 export class ShopPageComponent implements OnInit {
   products: Product[] = [];
-  cart: Cart = null;
+  cart: Cart = this.newCart();
 
   @ViewChild('sidenav')
   private sidenav: MatSidenav;
   constructor(private productService: ProductService,
     private cartService: CartService,
     public matSnackBar: MatSnackBar,
-    private signalrService: SignalRService) {
+    private signalrService: SignalRService,
+    private zone: NgZone) {
+    this.cartExpired = this.cartExpired.bind(this);
+    this.productUpdated = this.productUpdated.bind(this);
+  }
+
+  newCart() {
+    return new Cart({
+      id: '_',
+      cartItems: {}
+    });
   }
 
   ngOnInit() {
     this.productService.list().subscribe(p => this.products = p);
-    this.cartService.getCart().subscribe(c => this.cart = c);
+    this.cartService.getCart().subscribe(c => {
+      this.cart = c;
+    });
 
     this.signalrService.connectionEstablished.subscribe(() => {
       console.log('Shope page: Hub connection established');
     });
-    this.signalrService.productUpdated.subscribe((payload: CartItem) => {
+
+    this.signalrService.cartExpired.subscribe(this.cartExpired);
+
+    // this.signalrService.productUpdated.subscribe(this.productUpdated);
+    this.signalrService.productUpdated.subscribe((payload: Product) => {
       console.log(payload);
       console.log('Product updated');
-      const product = this.products.find(p => p.id === payload.productId);
-      product.stock -= payload.quantity;
-    });
-
-    this.signalrService.cartExpired.subscribe((cartId: string) => {
-      console.log(cartId);
-      if (this.cart.id === cartId) {
-        this.matSnackBar.open('Your cart has expired', 'OK', {
-          duration: 3000,
-          panelClass: 'toast-primary'
-        });
-      }
+      console.log(this.products);
+      payload.available = payload.stock - payload.retained;
+      const idx = findIndex(this.products, p => p.id === payload.id);
+      this.products[idx] = payload;
+      this.products = Object.assign([], this.products);
     });
   }
 
-  get nbItems() {
-    if (!this.cart || !this.cart.cartItems) {
-      return 0;
+  productUpdated(payload: Product) {
+    console.log(payload);
+    console.log('Product updated');
+    console.log(this.products);
+    let product = this.products.find(p => p.id === payload.id);
+    product = payload;
+    this.products = JSON.parse(JSON.stringify(this.products));
+    console.log(this.products);
+  }
+
+  cartExpired(cartId: string) {
+    console.log(cartId);
+    console.log('cart expired');
+    this.sidenav.close();
+    if (this.cart.id === cartId) {
+      this.matSnackBar.open('Your cart has expired', 'OK', {
+        duration: 3000,
+        panelClass: 'toast-primary'
+      });
+      this.zone.run(() => {
+        this.cart = this.newCart();
+      });
     }
+  }
+
+  get nbItems() {
     return Object.keys(this.cart.cartItems).length;
   }
 
@@ -80,9 +113,8 @@ export class ShopPageComponent implements OnInit {
     } else {
       item = cartItem;
     }
-    this.cartService.setItem(this.cart.id, item).subscribe(() => {
-      this.cart.cartItems[item.productId] = item;
-      this.cart = Object.assign({}, this.cart);
+    this.cartService.setItem(this.cart.id, item).subscribe(cart => {
+      this.cart = cart;
       if (!this.sidenav.opened) {
         this.sidenav.open();
       }
@@ -94,16 +126,11 @@ export class ShopPageComponent implements OnInit {
     });
   }
 
-  debug(obj: any) {
-    alert(JSON.stringify(obj));
-  }
-
   removeItem(productId: number) {
     this.cartService
       .removeItem(this.cart.id, productId)
-      .subscribe(() => {
-        delete this.cart.cartItems[productId];
-        this.cart = Object.assign({}, this.cart);
+      .subscribe(cart => {
+        this.cart = cart;
         if (this.nbItems === 0) {
           this.sidenav.close();
         }
@@ -118,9 +145,8 @@ export class ShopPageComponent implements OnInit {
   clear() {
     this.cartService
       .clear(this.cart.id)
-      .subscribe(() => {
-        this.cart.cartItems = {};
-        this.cart = Object.assign({}, this.cart);
+      .subscribe(cart => {
+        this.cart = cart;
         this.sidenav.close();
       }, error => {
         this.matSnackBar.open(error.message, 'OK', {

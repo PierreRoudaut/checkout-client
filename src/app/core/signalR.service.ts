@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable, NgZone } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 import { ChatMessage } from './message';
 import { environment } from '../../environments/environment';
@@ -14,7 +14,7 @@ export class SignalRService {
     private connectionIsEstablished = false;
     private hubConnection: HubConnection;
 
-    constructor() {
+    constructor(private ngZone: NgZone) {
         this.createConnection();
         this.registerOnServerEvents();
         this.startConnection();
@@ -45,8 +45,9 @@ export class SignalRService {
     }
 
     private registerOnServerEvents(): void {
-        this.hubConnection.on('ReceiveMessage', (data: any) => {
-            this.productUpdated.emit(data);
+        this.hubConnection.on('ProductUpdated', (data: any) => {
+            this.ngZone.run(() => this.productUpdated.emit(data));
+            // this.productUpdated.emit(data);
         });
         this.hubConnection.on('CartExpired', (data: any) => {
             this.cartExpired.emit(data);
