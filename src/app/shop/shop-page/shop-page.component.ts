@@ -5,6 +5,8 @@ import { MatSnackBar, MatSidenav } from '@angular/material';
 import { trigger, transition, query, stagger, animate, style } from '@angular/animations';
 import { CartService } from 'src/app/core/cart.service';
 import { Cart, CartItem } from 'src/app/core/cart';
+import { SignalRService } from 'src/app/core/signalR.service';
+import { ChatMessage } from 'src/app/core/message';
 
 @Component({
   selector: 'app-shop-page',
@@ -34,15 +36,25 @@ export class ShopPageComponent implements OnInit {
 
   @ViewChild('sidenav')
   private sidenav: MatSidenav;
-
   constructor(private productService: ProductService,
     private cartService: CartService,
-    public matSnackBar: MatSnackBar) {
+    public matSnackBar: MatSnackBar,
+    private signalrService: SignalRService) {
   }
 
   ngOnInit() {
     this.productService.list().subscribe(p => this.products = p);
     this.cartService.getCart().subscribe(c => this.cart = c);
+
+    this.signalrService.connectionEstablished.subscribe(() => {
+      console.log('Shope page: Hub connection established');
+    });
+    this.signalrService.messageReceived.subscribe((payload: CartItem) => {
+      console.log(payload);
+      const product = this.products.find(p => p.id === payload.productId);
+      product.stock -= payload.quantity;
+      console.log('Product updated');
+    });
   }
 
   get nbItems() {

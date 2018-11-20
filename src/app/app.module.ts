@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { CartService } from './core/cart.service';
 import { DevextremeModule } from './thirdparties/devextreme.module';
 import { ShoppingCartComponent } from './shop/shopping-cart/shopping-cart.component';
+import { SignalRService } from './core/signalR.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ShoppingCartComponent } from './shop/shopping-cart/shopping-cart.compon
   ],
   providers: [
     ProductService,
-    CartService
+    CartService,
+    SignalRService
   ],
   bootstrap: [AppComponent]
 })
