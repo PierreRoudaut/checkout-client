@@ -1,21 +1,38 @@
 div.shopping-cart {
+    .mat-ripple-element {
+        transition-duration: 0ms !important;
+    }
     table {
-        // min-width: 600px;
+        .not-allowed {
+            cursor: not-allowed;
+        }
+        div.quantity-actions {
+            button {
+                outline: 0;
+                background-color: transparent;
+                border: 0;
+                cursor: pointer;
+                &:active {
+                    transform: scale(0.8);
+                }
+                &:disabled {
+                    cursor: default;
+                }
+            }
+        }
         div.image {
-            vertical-align: middle; // text-align: center;
+            vertical-align: middle;
             img {
                 max-height: 40px;
             }
         }
-        td {
+        td,
+        th {
             padding-left: 10px;
             padding-right: 10px;
         }
         td.center,
         th.center {
-            text-align: center;
-        }
-        td.mat-column-image {
             text-align: center;
         }
         tr.mat-footer-row {
@@ -24,7 +41,8 @@ div.shopping-cart {
                 color: grey;
             }
             td.mat-column-price {
-                color: green;
+                color: white;
+                background-color: #32385F;
             }
         }
         div.remove-item {
