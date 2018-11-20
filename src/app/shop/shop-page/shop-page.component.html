@@ -19,7 +19,7 @@
         <span>Shop</span>
         <span style="flex: 1 1 auto;"></span>
         <div style="margin-right: 10px;margin-top: 5px">
-          <button [disabled]="!nbItems" [matBadge]="nbItems" matBadgePosition="after" matBadgeColor="accent"
+          <button class="cart-button" [disabled]="!nbItems" [matBadge]="nbItems" matBadgePosition="after" matBadgeColor="accent"
             mat-icon-button (click)="sidenav.open()">
             <mat-icon>shopping_cart</mat-icon>
           </button>
