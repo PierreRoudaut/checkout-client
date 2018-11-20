@@ -6,7 +6,6 @@ import { trigger, transition, query, stagger, animate, style } from '@angular/an
 import { CartService } from 'src/app/core/cart.service';
 import { Cart, CartItem } from 'src/app/core/cart';
 import { SignalRService } from 'src/app/core/signalR.service';
-import { ChatMessage } from 'src/app/core/message';
 
 @Component({
   selector: 'app-shop-page',
@@ -49,11 +48,21 @@ export class ShopPageComponent implements OnInit {
     this.signalrService.connectionEstablished.subscribe(() => {
       console.log('Shope page: Hub connection established');
     });
-    this.signalrService.messageReceived.subscribe((payload: CartItem) => {
+    this.signalrService.productUpdated.subscribe((payload: CartItem) => {
       console.log(payload);
+      console.log('Product updated');
       const product = this.products.find(p => p.id === payload.productId);
       product.stock -= payload.quantity;
-      console.log('Product updated');
+    });
+
+    this.signalrService.cartExpired.subscribe((cartId: string) => {
+      console.log(cartId);
+      if (this.cart.id === cartId) {
+        this.matSnackBar.open('Your cart has expired', 'OK', {
+          duration: 3000,
+          panelClass: 'toast-primary'
+        });
+      }
     });
   }
 

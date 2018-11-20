@@ -7,7 +7,8 @@ import { environment } from '../../environments/environment';
     providedIn: 'root'
 })
 export class SignalRService {
-    messageReceived = new EventEmitter<ChatMessage>();
+    productUpdated = new EventEmitter<any>();
+    cartExpired = new EventEmitter<any>();
     connectionEstablished = new EventEmitter<Boolean>();
 
     private connectionIsEstablished = false;
@@ -45,7 +46,10 @@ export class SignalRService {
 
     private registerOnServerEvents(): void {
         this.hubConnection.on('ReceiveMessage', (data: any) => {
-            this.messageReceived.emit(data);
+            this.productUpdated.emit(data);
+        });
+        this.hubConnection.on('CartExpired', (data: any) => {
+            this.cartExpired.emit(data);
         });
     }
 }
