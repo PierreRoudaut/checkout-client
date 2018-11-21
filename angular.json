@@ -49,6 +49,13 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
+              "styles": [
+                "node_modules/devextreme/dist/css/dx.common.css",
+                "node_modules/devextreme/dist/css/dx.material.blue.light.css",
+                "src/styles/styles.scss",
+                "src/styles/custom-material-theme.scss",
+                "src/styles/variables.scss"
+              ],
               "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -56,8 +63,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "10mb"
                 }
               ]
             }
