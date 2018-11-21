@@ -65,14 +65,17 @@ export class ShopPageComponent implements OnInit {
 
     this.signalrService.cartExpired.subscribe(this.cartExpired);
 
-    // this.signalrService.productUpdated.subscribe(this.productUpdated);
     this.signalrService.productUpdated.subscribe((payload: Product) => {
       console.log(payload);
       console.log('Product updated');
       console.log(this.products);
       payload.available = payload.stock - payload.retained;
       const idx = findIndex(this.products, p => p.id === payload.id);
-      this.products[idx] = payload;
+      if (idx !== -1) {
+        this.products[idx] = payload;
+      } else {
+        this.products.push(payload);
+      }
       this.products = Object.assign([], this.products);
     });
   }
