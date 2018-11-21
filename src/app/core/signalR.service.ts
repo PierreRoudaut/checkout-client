@@ -26,7 +26,7 @@ export class SignalRService {
 
     private createConnection() {
         this.hubConnection = new HubConnectionBuilder()
-            .withUrl(environment.apiEndpoint + '/api/hub')
+            .withUrl(environment.apiEndpoint + '/hub')
             .build();
     }
 
