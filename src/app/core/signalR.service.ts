@@ -26,7 +26,7 @@ export class SignalRService {
 
     private createConnection() {
         this.hubConnection = new HubConnectionBuilder()
-            .withUrl(environment.apiEndpoint + '/hub')
+            .withUrl(environment.apiEndpoint + '/api/hub')
             .build();
     }
 
@@ -47,7 +47,6 @@ export class SignalRService {
     private registerOnServerEvents(): void {
         this.hubConnection.on('ProductUpdated', (data: any) => {
             this.ngZone.run(() => this.productUpdated.emit(data));
-            // this.productUpdated.emit(data);
         });
         this.hubConnection.on('CartExpired', (data: any) => {
             this.cartExpired.emit(data);

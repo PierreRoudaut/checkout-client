@@ -5,7 +5,6 @@ import { ProductService } from 'src/app/core/product.service';
 import { MatSnackBar } from '@angular/material';
 import { remove } from 'lodash';
 import * as helper from 'src/app/core/helpers';
-import { debug } from 'util';
 
 @Component({
   selector: 'app-admin-page',
@@ -66,7 +65,6 @@ export class AdminPageComponent implements OnInit {
 
   onRowPrepared(e) {
     e.rowElement.style.height = '200px !important';
-    // e.rowElement.css({ height: '100px !important' });
   }
 
   onRowInserting(e) {
