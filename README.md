@@ -1,27 +1,52 @@
-# CheckoutClient
+# Checkout.Client
+[![Build Status](https://travis-ci.org/PierreRoudaut/checkout-client.svg?branch=master)](https://travis-ci.org/PierreRoudaut/checkout-client)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.6.
+## About
 
-## Development server
+Checkout.Client is web application client that consumes the API exposed by [Checkout.API](https://github.com/PierreRoudaut/checkout-api)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- ## /shop
+The shop page allows customers to retrieve the product catalog, add/update/remove item to their card, as well as clearing out the cart entirely.
+Using data binding and push notification subscription, the shop page will update itself in realtime according the the available quantity of products. The unique __id__ of the customer cart is stored on the client side using __localStorage__.
 
-## Code scaffolding
+Performing cart operations simultaneously from two different browsers should display product updates accordingly
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- ## /admin
+The admin page allows administrators to perform CRUD operations on products
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## UI
 
-## Running unit tests
+This web application implements Google's [Material Design Specification](https://material.io/) and relies on UI components coming from:
+ - [Angular Material](https://material.angular.io)
+ - [Devextreme](https://js.devexpress.com/Overview/Angular/)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Development Environment
 
-## Running end-to-end tests
+Checkout API is powered by [Angular](https://angular.io/) 7
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+1. Clone the repo
+2. Run the following commands:
+```bash
+npm install -g @angular/cli
+npm install
+## Replace the apiEndpoint with the url of the checkout-api server in src/environments/environment.ts
+ng serve -o
+```
 
-## Further help
+## Continuous Integration
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Checkout.Client uses [Travis CI](https://travis-ci.org/PierreRoudaut/checkout-client) to run tests
+
+## Testing
+
+```bash
+ng test
+```
+
+## TODO
+
+ - Support realtime products update for administration page
+ - Add authentication
+ - Setup continuous deployment script
+ - Support checkout
