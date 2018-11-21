@@ -5,6 +5,7 @@ import { ProductService } from 'src/app/core/product.service';
 import { MatSnackBar } from '@angular/material';
 import { remove } from 'lodash';
 import * as helper from 'src/app/core/helpers';
+import { debug } from 'util';
 
 @Component({
   selector: 'app-admin-page',
@@ -23,14 +24,13 @@ export class AdminPageComponent implements OnInit {
     this.service.list().subscribe(products => this.products = products);
   }
 
+  /**
+   * Prevent stock editing in edit mode
+   * @param e devExtreme Event
+   */
   onEditorPreparing(e) {
-    // tslint:disable-next-line:no-debugger
-    debugger;
-    if (e.dataField === 'image') {
-      e.editorName = 'dxFileUploader'; // Changes the editor's type
-      e.editorOptions.uploadMode = 'useForm';
-      e.editorOptions.name = 'docname';
-      e.editorOptions.accept = 'images/*';
+    if (e.row.rowType === 'data' && !e.row.inserted && e.dataField === 'stock') {
+      e.editorOptions.disabled = true;
     }
   }
 

@@ -1,27 +1,35 @@
 <div class="admin-page" fxLayout="column" fxLayouAlign="center center">
-        <dx-data-grid class="mat-elevation-z4 products-grid" [dataSource]="products" keyExpr="id" [allowColumnReordering]="false" (onRowUpdating)="onRowUpdating($event)"
-            (onRowPrepared)="onRowPrepared($event)" (onRowRemoving)="onRowRemoving($event)" (onRowInserting)="onRowInserting($event)">
-            <dxo-editing mode="row" [allowUpdating]="true" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true">
-                <dxo-texts confirmDeleteMessage="Delete product ?"></dxo-texts>
-            </dxo-editing>
-            <dxi-column [allowSorting]="false" dataField="imageUrl" [minWidth]="150" caption="" cellTemplate="pictureCellTemplate"></dxi-column>
-            <dxi-column dataField="name" caption="Name">
-            </dxi-column>
-            <dxi-column dataField="category" caption="Category">
-            </dxi-column>
-            <dxi-column dataField="price" caption="Price" cellTemplate="priceCellTemplate">
-            </dxi-column>
-            <dxi-column [allowEditing]="false" dataField="stock" caption="In Stock">
-            </dxi-column>
-            <dxi-column dataField="description" caption="Description">
-            </dxi-column>
+    <dx-data-grid class="mat-elevation-z4 products-grid" [dataSource]="products" keyExpr="id" [allowColumnReordering]="false"
+        (onRowUpdating)="onRowUpdating($event)" (onRowPrepared)="onRowPrepared($event)" (onRowRemoving)="onRowRemoving($event)"
+        (onRowInserting)="onRowInserting($event)" (onEditorPreparing)="onEditorPreparing($event)">
+        <dxo-editing mode="row" [allowUpdating]="true" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true">
+            <dxo-texts confirmDeleteMessage="Delete product ?"></dxo-texts>
+        </dxo-editing>
+        <dxi-column [allowSorting]="false" dataField="imageUrl" [minWidth]="150" caption="Image URL" cellTemplate="pictureCellTemplate">
+            <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="name" caption="Name">
+            <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="category" caption="Category">
+            <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="price" caption="Price" cellTemplate="priceCellTemplate">
+            <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="stock" caption="In Stock">
+            <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="description" caption="Description">
+            <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
 
-            <div *dxTemplate="let data of 'priceCellTemplate'">
-                {{helper.formatPrice(data.value)}}
-            </div>
-            <div *dxTemplate="let data of 'pictureCellTemplate'">
-                <img *ngIf="data.value" class="picture" [src]="data.value" />
-            </div>
+        <div *dxTemplate="let data of 'priceCellTemplate'">
+            {{helper.formatPrice(data.value)}}
+        </div>
+        <div *dxTemplate="let data of 'pictureCellTemplate'">
+            <img *ngIf="data.value" class="picture" [src]="data.value" />
+        </div>
 
-        </dx-data-grid>
-    </div>
+    </dx-data-grid>
+</div>

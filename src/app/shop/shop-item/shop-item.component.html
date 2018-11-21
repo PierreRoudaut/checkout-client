@@ -1,5 +1,6 @@
 <div class="shop-item mat-elevation-z1" fxLayout="column">
-  <div class="wrapper" [ngClass]="{'out-of-stock': !product.available}">
+    <!-- [ngClass]="{'out-of-stock': !product.available}" -->
+  <div class="wrapper" [ngClass]="cssClasses()" >
     <div class="header">
       <div class="name">{{ product.name }}</div>
       <div class="category">{{ product.category }}</div>

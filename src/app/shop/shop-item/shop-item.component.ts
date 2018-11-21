@@ -7,7 +7,7 @@ import * as helper from 'src/app/core/helpers';
 @Component({
   selector: 'app-shop-item',
   templateUrl: './shop-item.component.html',
-  styleUrls: ['./shop-item.component.scss']
+  styleUrls: ['./shop-item.component.scss'],
 })
 export class ShopItemComponent implements OnInit {
   @Input() product: Product;
@@ -17,6 +17,14 @@ export class ShopItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  cssClasses() {
+    const cssClasses = {
+      'out-of-stock': !this.product.available,
+    };
+    cssClasses['product-quantity-' + this.product.available] = true;
+    return cssClasses;
   }
 
   add() {
