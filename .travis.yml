@@ -7,4 +7,3 @@ script:
  - npm install -g @angular/cli
  - npm install
  - npm run lint
- - npm run test
