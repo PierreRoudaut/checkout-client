@@ -53,7 +53,7 @@ export class SignalRService {
             this.ngZone.run(() => this.productDeleted.emit(data));
         });
         this.hubConnection.on('CartExpired', (data: any) => {
-            this.cartExpired.emit(data);
+            this.ngZone.run(() => this.cartExpired.emit(data));
         });
     }
 }

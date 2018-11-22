@@ -65,49 +65,39 @@ export class ShopPageComponent implements OnInit {
     });
 
     this.signalrService.cartExpired.subscribe(this.cartExpired);
-
-    this.signalrService.productUpdated.subscribe((payload: Product) => {
-      console.log(payload);
-      console.log('Product updated');
-      console.log(this.products);
-      payload.available = payload.stock - payload.retained;
-      const idx = findIndex(this.products, p => p.id === payload.id);
-      if (idx !== -1) {
-        this.products[idx] = payload;
-      } else {
-        this.products.push(payload);
-      }
-      this.products = Object.assign([], this.products);
-    });
+    this.signalrService.productUpdated.subscribe(this.productUpdated);
     this.signalrService.productDeleted.subscribe(this.productDeleted);
   }
 
-  productDeleted(payload: Product) {
+  productDeleted(product: Product) {
     console.log('Product deleted');
-    remove(this.products, p => p.id === payload.id);
+    remove(this.products, p => p.id === product.id);
     this.products = Object.assign([], this.products);
   }
 
-  productUpdated(payload: Product) {
-    console.log(payload);
+  productUpdated(product: Product) {
     console.log('Product updated');
-    let product = this.products.find(p => p.id === payload.id);
-    product = payload;
-    this.products = JSON.parse(JSON.stringify(this.products));
+    console.log(product);
+    product.available = product.stock - product.retained;
+    const idx = findIndex(this.products, p => p.id === product.id);
+    if (idx !== -1) {
+      this.products[idx] = product;
+    } else {
+      this.products.push(product);
+    }
+    this.products = Object.assign([], this.products);
   }
 
   cartExpired(cartId: string) {
+    console.log('Cart expired');
     console.log(cartId);
-    console.log('cart expired');
     this.sidenav.close();
     if (this.cart.id === cartId) {
       this.matSnackBar.open('Your cart has expired', 'OK', {
         duration: 3000,
         panelClass: 'toast-primary'
       });
-      this.zone.run(() => {
-        this.cart = this.newCart();
-      });
+      this.cart = this.newCart();
     }
   }
 

@@ -16,7 +16,7 @@ div.shopping-cart {
                     transform: scale(0.8);
                 }
                 &:disabled {
-                    cursor: default;
+                    cursor: not-allowed;
                 }
             }
         }
