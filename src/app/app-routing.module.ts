@@ -4,15 +4,6 @@ import { ShopPageComponent } from './shop/shop-page/shop-page.component';
 import { AdminPageComponent } from './admin/admin-page/admin-page.component';
 
 const routes: Routes = [
-  // {
-  //   path: '**',
-  //   redirectTo: '/shop'
-  // },
-  {
-    path: '',
-    redirectTo: '/shop',
-    pathMatch: 'full'
-  },
   {
     path: 'shop',
     component: ShopPageComponent,
@@ -28,6 +19,15 @@ const routes: Routes = [
       title: 'Admin',
       icon: 'user'
     }
+  },
+  {
+    path: '**',
+    redirectTo: '/shop',
+  },
+  {
+    path: '',
+    redirectTo: '/shop',
+    pathMatch: 'full'
   }
 ];
 

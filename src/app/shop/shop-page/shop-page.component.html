@@ -2,14 +2,16 @@
 
   <mat-sidenav #sidenav position="end">
     <mat-toolbar color="primary" style="background-color: #32385F">
-      <mat-icon>shopping_cart</mat-icon>
-      <span style="margin-left: 10px">
+      <button mat-icon-button mat-button (click)="sidenav.close()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div style="text-align: end">
         Cart
-      </span>
+      </div>
     </mat-toolbar>
 
     <app-shopping-cart (setItem)="addToCart($event)" (clearCart)="clear()" (removeItem)="removeItem($event)" [cart]="cart"
-    [products]="products">
+      [products]="products">
     </app-shopping-cart>
   </mat-sidenav>
 

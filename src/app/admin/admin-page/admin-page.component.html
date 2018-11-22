@@ -2,7 +2,7 @@
     <dx-data-grid class="mat-elevation-z4 products-grid" [dataSource]="products" keyExpr="id" [allowColumnReordering]="false"
         (onRowUpdating)="onRowUpdating($event)" (onRowPrepared)="onRowPrepared($event)" (onRowRemoving)="onRowRemoving($event)"
         (onRowInserting)="onRowInserting($event)" (onEditorPreparing)="onEditorPreparing($event)">
-        <dxo-editing mode="row" [allowUpdating]="true" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true">
+        <dxo-editing mode="popup" [allowUpdating]="true" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true">
             <dxo-texts confirmDeleteMessage="Delete product ?"></dxo-texts>
         </dxo-editing>
         <dxi-column [allowSorting]="false" dataField="imageUrl" [minWidth]="150" caption="Image URL" cellTemplate="pictureCellTemplate">
