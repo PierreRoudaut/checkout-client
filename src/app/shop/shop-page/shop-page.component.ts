@@ -6,7 +6,7 @@ import { trigger, transition, query, stagger, animate, style } from '@angular/an
 import { CartService } from 'src/app/core/cart.service';
 import { Cart, CartItem } from 'src/app/core/cart';
 import { SignalRService } from 'src/app/core/signalR.service';
-import { findIndex } from 'lodash';
+import { findIndex, remove } from 'lodash';
 
 
 @Component({
@@ -44,6 +44,7 @@ export class ShopPageComponent implements OnInit {
     private zone: NgZone) {
     this.cartExpired = this.cartExpired.bind(this);
     this.productUpdated = this.productUpdated.bind(this);
+    this.productDeleted = this.productDeleted.bind(this);
   }
 
   newCart() {
@@ -78,16 +79,21 @@ export class ShopPageComponent implements OnInit {
       }
       this.products = Object.assign([], this.products);
     });
+    this.signalrService.productDeleted.subscribe(this.productDeleted);
+  }
+
+  productDeleted(payload: Product) {
+    console.log('Product deleted');
+    remove(this.products, p => p.id === payload.id);
+    this.products = Object.assign([], this.products);
   }
 
   productUpdated(payload: Product) {
     console.log(payload);
     console.log('Product updated');
-    console.log(this.products);
     let product = this.products.find(p => p.id === payload.id);
     product = payload;
     this.products = JSON.parse(JSON.stringify(this.products));
-    console.log(this.products);
   }
 
   cartExpired(cartId: string) {

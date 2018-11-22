@@ -8,6 +8,7 @@ import { environment } from '../../environments/environment';
 })
 export class SignalRService {
     productUpdated = new EventEmitter<any>();
+    productDeleted = new EventEmitter<any>();
     cartExpired = new EventEmitter<any>();
     connectionEstablished = new EventEmitter<Boolean>();
 
@@ -47,6 +48,9 @@ export class SignalRService {
     private registerOnServerEvents(): void {
         this.hubConnection.on('ProductUpdated', (data: any) => {
             this.ngZone.run(() => this.productUpdated.emit(data));
+        });
+        this.hubConnection.on('ProductDeleted', (data: any) => {
+            this.ngZone.run(() => this.productDeleted.emit(data));
         });
         this.hubConnection.on('CartExpired', (data: any) => {
             this.cartExpired.emit(data);
