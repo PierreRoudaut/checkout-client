@@ -9,7 +9,7 @@ Checkout.Client is web application client that consumes the API exposed by [Chec
 The shop page allows customers to retrieve the product catalog, add/update/remove item to their card, as well as clearing out the cart entirely.
 Using data binding and push notification subscription, the shop page will update itself in realtime according the the available quantity of products. The unique __id__ of the customer cart is stored on the client side using __localStorage__.
 
-Performing cart operations simultaneously from two different browsers should display product updates accordingly.
+Performing cart operations simultaneously on two different browsers should display product stock updates accordingly.
 
 - ## /admin
 The admin page allows administrators to perform CRUD operations on products
